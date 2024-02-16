@@ -32,5 +32,32 @@
         {
             items.Add(item);
         }
+
+        public void ConsumeItem(out bool addRandomItem)
+        {
+            addRandomItem = false;
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                Item item = items[i];
+
+                if (item.ItemType != ItemType.Consumable)
+                {
+                    continue;
+                }
+
+                if (Random.value <= item.ChanceToSpawnItem)
+                {
+                    addRandomItem = true;
+                }
+                else
+                {
+                    money += item.Value;
+                }
+
+                items.RemoveAt(i);
+                return;
+            }
+        }
     }
 }
