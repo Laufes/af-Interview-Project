@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69113b7427065504eb737c4b061e3fcc, type: 3}
+  m_Name: Knight
+  m_EditorClassIdentifier: 
+  <UnitType>k__BackingField: 1
+  <AttributeTypes>k__BackingField: 01000000
+  <UnitStatistics>k__BackingField:
+    <HealthPoints>k__BackingField: 12
+    <ArmorPoints>k__BackingField: 2
+    <AttackInterval>k__BackingField: 1
+    <AttackDamage>k__BackingField: 5
+    <BonusDamages>k__BackingField:
+    - <AttributeType>k__BackingField: 0
+      <AttackDamage>k__BackingField: 2
+  <UnitPrefab>k__BackingField: {fileID: 6500405898493012695, guid: 014dd7a929923014780eecd3c7f74ade,
+    type: 3}
