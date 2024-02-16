@@ -10,6 +10,7 @@ namespace AFSInterview.Combat
         [field: SerializeField] private CombatData CombatData { get; set; }
         [field: SerializeField] private Transform Player1ArmyTransform { get; set; }
         [field: SerializeField] private Transform Player2ArmyTransform { get; set; }
+        [field: SerializeField] private Indicator Indicator { get; set; }
 
         private List<Unit> AllUnits { get; set; } = new List<Unit>();
 
@@ -35,6 +36,9 @@ namespace AFSInterview.Combat
                 Debug.LogWarning($"No units in armies");
                 return;
             }
+
+            Indicator.Initialize();
+            Indicator.Hide();
 
             CheckConditions();
             StartNextTurn();
@@ -81,8 +85,7 @@ namespace AFSInterview.Combat
                 return;
             }
 
-            // Show unit indicator
-            Debug.Log($"Current unit {CurrentUnit.name} {CurrentUnit.AffilationType}");
+            Indicator.Show(CurrentUnit.transform.position);
         }
 
         private void CheckConditions()
@@ -116,6 +119,8 @@ namespace AFSInterview.Combat
             {
                 return;
             }
+
+            Indicator.Hide();
 
             int damage = CombatRules.GetResultDamage(CurrentUnit.UnitData, target.UnitData);
             CurrentUnit.AttackUnit(target, DealDamage, AnimationCompleted);
