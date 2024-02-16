@@ -27,7 +27,6 @@
 
         private void Awake()
         {
-
             controls = new Controls();
             controls.Inventory.Enable();
             controls.Inventory.Click.performed += Click_performed;
@@ -35,17 +34,6 @@
             controls.Inventory.Consume.performed += Consume_performed; ;
 
             StartCoroutine(SpawnItemCoroutine());
-        }
-
-        private void Consume_performed(InputAction.CallbackContext obj)
-        {
-            inventoryController.ConsumeItem(out bool addRandomItem);
-            if (addRandomItem)
-            {
-                inventoryController.AddItem(randomItemsFromConsumables[Random.Range(0, randomItemsFromConsumables.Count)]);
-            }
-
-            UpdateMoneyText();
         }
 
         private void UpdateMoneyText()
@@ -106,6 +94,15 @@
             Debug.Log("Picked up " + item.Name + " with value of " + item.Value + " and now have " + inventoryController.ItemsCount + " items");
         }
 
+        private IEnumerator SpawnItemCoroutine()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(itemSpawnInterval);
+                SpawnNewItem();
+            }
+        }
+
         private void Sell_performed(InputAction.CallbackContext obj)
         {
             inventoryController.SellAllItemsUpToValue(itemSellMaxValue);
@@ -117,13 +114,15 @@
             TryPickUpItem();
         }
 
-        private IEnumerator SpawnItemCoroutine()
+        private void Consume_performed(InputAction.CallbackContext obj)
         {
-            while (true)
+            inventoryController.ConsumeItem(out bool addRandomItem);
+            if (addRandomItem)
             {
-                yield return new WaitForSeconds(itemSpawnInterval);
-                SpawnNewItem();
+                inventoryController.AddItem(randomItemsFromConsumables[Random.Range(0, randomItemsFromConsumables.Count)]);
             }
+
+            UpdateMoneyText();
         }
     }
 }
