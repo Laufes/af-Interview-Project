@@ -11,5 +11,10 @@ namespace AFSInterview.Combat
         [field: SerializeField] public List<AttributeType> AttributeTypes { get; private set; } = new List<AttributeType>();
         [field: SerializeField] public UnitStatistics UnitStatistics { get; private set; }
         [field: SerializeField] public Unit UnitPrefab { get; private set; }
+
+        public bool HasAttribute(AttributeType attributeType)
+        {
+            return AttributeTypes.Contains(attributeType);
+        }
     }
 }
