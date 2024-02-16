@@ -17,6 +17,7 @@ namespace AFSInterview.Combat
         public UnitData UnitData { get; private set; }
 
         public bool CanUseSkill => CurrentCooldown == 0;
+        public bool IsAlive => CurrentHealthPoints > 0;
 
         private void OnMouseEnter()
         {
@@ -90,23 +91,62 @@ namespace AFSInterview.Combat
             }
         }
 
-        /// <summary>
-        /// Returns true if unit is killed
-        /// </summary>
-        public bool DealDamage(int damage)
+        public void DealDamage(int damage)
         {
             CurrentHealthPoints -= damage;
             CurrentHealthPoints = Math.Max(CurrentHealthPoints, 0);
+        }
 
-            if (CurrentHealthPoints < 0)
+        public void KillUnit()
+        {
+            transform.DOScale(0, 1f).OnComplete(OnCompleted);
+
+            void OnCompleted()
             {
-                transform.DOScale(0, 1f);
+                Destroy(gameObject);
+            }
+        }
 
-                return true;
+        public string GetDescription(int damage)
+        {
+            string description = string.Empty;
+
+            description += UnitData.UnitName + "\n";
+            description += $"HP: {CurrentHealthPoints}";
+            if (damage > 0)
+            {
+                description += $"<color=red>-{damage}</color>";
             }
 
-            return false;
+            description += $"/{UnitData.UnitStatistics.HealthPoints}\n";
+            description += $"Damage: {UnitData.UnitStatistics.AttackDamage}\n";
+            description += $"Armor: {UnitData.UnitStatistics.ArmorPoints}\n";
+            description += $"Cooldown: {UnitData.UnitStatistics.AttackInterval}({CurrentCooldown})\n";
+            if (UnitData.AttributeTypes.Count > 0)
+            {
+                description += "Attributes: ";
+                for (int i = 0; i < UnitData.AttributeTypes.Count; i++)
+                {
+                    description += $"{UnitData.AttributeTypes[i]}";
 
+                    if (i < UnitData.AttributeTypes.Count - 1)
+                    {
+                        description += ", ";
+                    }
+                }
+                description += "\n";
+            }
+
+            if (UnitData.UnitStatistics.BonusDamages.Count > 0)
+            {
+                description += "Bonus damage:\n";
+                for (int i = 0; i < UnitData.UnitStatistics.BonusDamages.Count; i++)
+                {
+                    description += $"{UnitData.UnitStatistics.BonusDamages[i].AttributeType}: {UnitData.UnitStatistics.BonusDamages[i].AttackDamage:+#;-#;0}\n";
+                }
+            }
+
+            return description;
         }
     }
 }

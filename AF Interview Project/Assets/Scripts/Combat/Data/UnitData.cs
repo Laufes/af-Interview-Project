@@ -7,6 +7,7 @@ namespace AFSInterview.Combat
     [CreateAssetMenu(fileName = nameof(UnitData), menuName = "Combat/" + nameof(UnitData), order = 1)]
     public class UnitData : ScriptableObject
     {
+        [field: SerializeField] public string UnitName { get; private set; }
         [field: SerializeField] public UnitType UnitType { get; private set; }
         [field: SerializeField] public List<AttributeType> AttributeTypes { get; private set; } = new List<AttributeType>();
         [field: SerializeField] public UnitStatistics UnitStatistics { get; private set; }

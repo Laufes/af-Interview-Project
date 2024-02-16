@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69113b7427065504eb737c4b061e3fcc, type: 3}
   m_Name: Knight
   m_EditorClassIdentifier: 
+  <UnitName>k__BackingField: Knight
   <UnitType>k__BackingField: 1
   <AttributeTypes>k__BackingField: 01000000
   <UnitStatistics>k__BackingField:

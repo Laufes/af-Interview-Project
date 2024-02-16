@@ -10,7 +10,9 @@ namespace AFSInterview.Combat
         [field: SerializeField] private CombatData CombatData { get; set; }
         [field: SerializeField] private Transform Player1ArmyTransform { get; set; }
         [field: SerializeField] private Transform Player2ArmyTransform { get; set; }
+        [field: Header("UI")]
         [field: SerializeField] private Indicator Indicator { get; set; }
+        [field: SerializeField] public Tooltip Tooltip { get; set; }
 
         private List<Unit> AllUnits { get; set; } = new List<Unit>();
 
@@ -55,6 +57,9 @@ namespace AFSInterview.Combat
                 Unit unit = Instantiate(unitData.UnitPrefab, position, new Quaternion(), parent);
                 unit.Initialize(unitData, affilation);
                 unit.OnUnitClicked += Unit_OnUnitClicked;
+
+                unit.OnUnitHoverStarted += Unit_OnUnitHoverStarted;
+                unit.OnUnitHoverEnded += Unit_OnUnitHoverEnded;
 
                 AllUnits.Add(unit);
             }
@@ -108,6 +113,23 @@ namespace AFSInterview.Combat
             }
         }
 
+        private void Unit_OnUnitHoverEnded(Unit unit)
+        {
+            Tooltip.HideText();
+        }
+
+        private void Unit_OnUnitHoverStarted(Unit unit)
+        {
+            int damage = 0;
+
+            if (CurrentUnit.AffilationType != unit.AffilationType)
+            {
+                damage = CombatRules.GetResultDamage(CurrentUnit.UnitData, unit.UnitData);
+            }
+
+            Tooltip.ShowTooltip(unit, unit.GetDescription(damage));
+        }
+
         private void Unit_OnUnitClicked(Unit target)
         {
             if (CurrentUnit == null || CurrentUnit.HadTurn)
@@ -127,9 +149,12 @@ namespace AFSInterview.Combat
 
             void DealDamage()
             {
-                if (target.DealDamage(damage))
+                target.DealDamage(damage);
+
+                if (!target.IsAlive)
                 {
                     AllUnits.Remove(target);
+                    target.KillUnit();
                     CheckConditions();
                 }
             }

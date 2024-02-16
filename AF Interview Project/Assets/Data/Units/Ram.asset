@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69113b7427065504eb737c4b061e3fcc, type: 3}
   m_Name: Ram
   m_EditorClassIdentifier: 
+  <UnitName>k__BackingField: Ram
   <UnitType>k__BackingField: 5
   <AttributeTypes>k__BackingField: 0200000001000000
   <UnitStatistics>k__BackingField:
