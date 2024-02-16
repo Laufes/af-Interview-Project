@@ -1,0 +1,31 @@
+# =============== #
+# Unity generated #
+# =============== #
+[Tt]emp/
+[Oo]bj/
+[Ll]ibrary/
+[Ll]ogs/
+[Uu]serSettings/
+
+sysinfo.txt
+*.stackdump
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+[Ee]xported[Oo]bj/
+.vs/
+.idea/
+/*.userprefs
+*.csproj
+/*.pidb
+/*.suo
+/*.sln*
+/*.user
+/*.unityproj
+/*.booproj
+*.CSharp.Editor.csproj
+*.CSharp.csproj
+
+*.sln
+
+.utmp/
