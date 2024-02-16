@@ -1,0 +1,74 @@
+{
+    "name": "Controls",
+    "maps": [
+        {
+            "name": "Inventory",
+            "id": "7f6fa404-4ffe-4375-ad32-1361c7e54abb",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "491d6dab-4d7f-4304-b631-c28a65e3a2c5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Sell",
+                    "type": "Button",
+                    "id": "243f6083-cdbf-4dab-8f22-ee935d29061f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Consume",
+                    "type": "Button",
+                    "id": "876b261b-bbe1-441a-8a8b-4714b59dc48d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4aa8e9f5-1fe5-4195-9058-b91481ec9c23",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3546c8f2-f4df-4245-95ae-88c1708705f8",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sell",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0a8a3345-d6d4-47aa-9ad6-d73524de3168",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Consume",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

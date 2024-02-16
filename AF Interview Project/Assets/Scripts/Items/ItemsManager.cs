@@ -1,9 +1,10 @@
 ﻿namespace AFSInterview.Items
 {
+    using System.Collections;
     using System.Collections.Generic;
     using TMPro;
     using UnityEngine;
-    using UnityEngine.UIElements;
+    using UnityEngine.InputSystem;
 
     public class ItemsManager : MonoBehaviour
     {
@@ -20,46 +21,31 @@
         [SerializeField] private TextMeshProUGUI moneyText;
         [Space(10)]
         [SerializeField] private List<Item> randomItemsFromConsumables = new List<Item>();
-        [SerializeField] private List<IItemHolder> itemsPools = new List<IItemHolder>();
-        [SerializeField] private List<IItemHolder> consumableItemsPool = new List<IItemHolder>();
 
         private Dictionary<ItemType, List<IItemHolder>> itemsPool = new Dictionary<ItemType, List<IItemHolder>>();
-
-        private float nextItemSpawnTime;
+        private Controls controls;
 
         private void Awake()
         {
 
+            controls = new Controls();
+            controls.Inventory.Enable();
+            controls.Inventory.Click.performed += Click_performed;
+            controls.Inventory.Sell.performed += Sell_performed;
+            controls.Inventory.Consume.performed += Consume_performed; ;
+
+            StartCoroutine(SpawnItemCoroutine());
         }
 
-        private void Update()
+        private void Consume_performed(InputAction.CallbackContext obj)
         {
-            if (Time.time >= nextItemSpawnTime)
+            inventoryController.ConsumeItem(out bool addRandomItem);
+            if (addRandomItem)
             {
-                SpawnNewItem();
+                inventoryController.AddItem(randomItemsFromConsumables[Random.Range(0, randomItemsFromConsumables.Count)]);
             }
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                TryPickUpItem();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                inventoryController.SellAllItemsUpToValue(itemSellMaxValue);
-                UpdateMoneyText();
-            }
-
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                inventoryController.ConsumeItem(out bool addRandomItem);
-                if (addRandomItem)
-                {
-                    inventoryController.AddItem(randomItemsFromConsumables[Random.Range(0, randomItemsFromConsumables.Count)]);
-                }
-
-                UpdateMoneyText();
-            }
+            UpdateMoneyText();
         }
 
         private void UpdateMoneyText()
@@ -69,8 +55,6 @@
 
         private void SpawnNewItem()
         {
-            nextItemSpawnTime = Time.time + itemSpawnInterval;
-
             var spawnAreaBounds = itemSpawnArea.bounds;
             var position = new Vector3(
                 Random.Range(spawnAreaBounds.min.x, spawnAreaBounds.max.x),
@@ -120,6 +104,26 @@
             inventoryController.AddItem(item);
 
             Debug.Log("Picked up " + item.Name + " with value of " + item.Value + " and now have " + inventoryController.ItemsCount + " items");
+        }
+
+        private void Sell_performed(InputAction.CallbackContext obj)
+        {
+            inventoryController.SellAllItemsUpToValue(itemSellMaxValue);
+            UpdateMoneyText();
+        }
+
+        private void Click_performed(InputAction.CallbackContext obj)
+        {
+            TryPickUpItem();
+        }
+
+        private IEnumerator SpawnItemCoroutine()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(itemSpawnInterval);
+                SpawnNewItem();
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace AFSInterview
+namespace AFSInterview.Items
 {
     public enum ItemType
     {
