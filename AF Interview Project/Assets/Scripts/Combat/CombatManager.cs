@@ -127,7 +127,7 @@ namespace AFSInterview.Combat
                 damage = CombatRules.GetResultDamage(CurrentUnit.UnitData, unit.UnitData);
             }
 
-            Tooltip.ShowTooltip(unit, unit.GetDescription(damage));
+            Tooltip.ShowTooltip(unit.transform.position, unit.GetDescription(damage));
         }
 
         private void Unit_OnUnitClicked(Unit target)
@@ -143,6 +143,7 @@ namespace AFSInterview.Combat
             }
 
             Indicator.Hide();
+            Tooltip.HideText();
 
             int damage = CombatRules.GetResultDamage(CurrentUnit.UnitData, target.UnitData);
             CurrentUnit.AttackUnit(target, DealDamage, AnimationCompleted);

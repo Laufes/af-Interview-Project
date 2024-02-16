@@ -19,7 +19,7 @@ MonoBehaviour:
     <HealthPoints>k__BackingField: 8
     <ArmorPoints>k__BackingField: 0
     <AttackInterval>k__BackingField: 1
-    <AttackDamage>k__BackingField: 2
+    <AttackDamage>k__BackingField: 3
     <BonusDamages>k__BackingField:
     - <AttributeType>k__BackingField: 2
       <AttackDamage>k__BackingField: 6
